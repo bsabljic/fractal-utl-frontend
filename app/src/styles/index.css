@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .container-xxl { @apply max-w-7xl mx-auto px-3 sm:px-6 lg:px-8; }
+
+  /* card s DaisyUI backgroundom (bg-base-100) i suptilnim border/shadow */
+  .card {
+    @apply bg-base-100 border border-white/10 shadow-xl rounded-xl;
+    /* dodatni fallback ako tema izostane */
+    background-color: hsl(var(--b1, 0 0% 100%) / 0.6);
+  }
+
+  .section-title { @apply text-xl sm:text-2xl font-semibold tracking-tight; }
+  .subtle { @apply text-slate-400; }
+}
