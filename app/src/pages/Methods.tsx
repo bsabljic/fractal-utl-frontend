@@ -1,19 +1,20 @@
 export default function Methods(){
+  const cards = [
+    {title:'Fractal Consciousness Framework', formula:'D₁ = (1 − H) + S'},
+    {title:'Components (rigidity)', formula:'D₃ = H + σ² + (1 − G)'},
+    {title:'UTL Temporal Risk', formula:'vₜ = α·rₜ² + (1−α)·vₜ₋₁'},
+    {title:'Unified Score', formula:'z(RISK_fractal) + z(v_end)'},
+    {title:'Cox PH', formula:'h(t|x) = h₀(t) · exp(βᵀx)'},
+  ]
   return (
-    <div className="space-y-4">
-      <Card title="FRACTAL" text="RISK = D₁ − D₃ (spatial rigidity vs complexity balance)" />
-      <Card title="UTL" text="vₜ = α·rₜ² + (1−α)·vₜ₋₁ (temporal accumulation via EWMA)" />
-      <Card title="UNIFIED" text="z(RISK) + z(v_EWMA)" />
+    <div className="grid md:grid-cols-2 gap-4">
+      {cards.map(c=>(
+        <div key={c.title} className="card bg-base-100 shadow">
+          <div className="card-body"><h3 className="font-semibold">{c.title}</h3>
+            <code className="opacity-80">{c.formula}</code>
+          </div>
+        </div>
+      ))}
     </div>
-  );
-}
-function Card({title, text}:{title:string; text:string}) {
-  return (
-    <div className="card bg-base-100 border border-white/10">
-      <div className="card-body">
-        <div className="font-semibold">{title}</div>
-        <div className="opacity-80">{text}</div>
-      </div>
-    </div>
-  );
+  )
 }

@@ -1,42 +1,29 @@
-import { useRun } from "../store/run";
-
-export default function Results() {
-  const { result, error, loading } = useRun();
-
+import {useEffect,useState} from 'react'
+type Demo = { cindex:number; p:number; hr:number; ci:[number,number]; note:string }
+export default function Results(){
+  const [data,setData] = useState<Demo|null>(null)
+  useEffect(()=>{ fetch('/api/demo').then(r=>r.json()).then(setData) },[])
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-semibold">Results</h2>
-      {loading && <div>Running analysis…</div>}
-      {error && <div className="text-error">{error}</div>}
-      {!loading && !result && !error && (
-        <div className="opacity-70">After analysis, results will appear here (C-index, HR, CI, p-values).</div>
-      )}
-      {result && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <StatCard label="C-index" value={result.cindex} />
-          <StatCard label="Sensitivity" value={result.sens} />
-          <StatCard label="Specificity" value={result.spec} />
-          <StatCard label="Brier Score" value={result.brier} />
-          <StatCard label="HR" value={result.hr} />
-          <div className="card bg-base-100 border border-white/10">
-            <div className="card-body">
-              <div className="font-medium">95% CI</div>
-              <div className="text-lg">{result.ci ? `[${result.ci[0]}, ${result.ci[1]}]` : "—"}</div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function StatCard({ label, value }: { label: string; value?: number }) {
-  return (
-    <div className="card bg-base-100 border border-white/10">
+    <div className="card bg-base-100 shadow">
       <div className="card-body">
-        <div className="font-medium">{label}</div>
-        <div className="text-2xl">{value ?? "—"}</div>
+        <h2 className="card-title">Analysis Results</h2>
+        {!data ? <progress className="progress w-56"></progress> :
+        <div className="grid sm:grid-cols-4 gap-4">
+          <Stat label="C-INDEX" value={data.cindex.toFixed(3)} sub="+0.068"/>
+          <Stat label="LOG-RANK p" value={data.p.toFixed(3)} sub="p<.05"/>
+          <Stat label="HR" value={data.hr.toFixed(2)} sub={`${data.ci[0]}–${data.ci[1]}`}/>
+          <div className="col-span-1 sm:col-span-4 text-sm opacity-70">{data.note}</div>
+        </div>}
       </div>
     </div>
-  );
+  )
+}
+function Stat({label,value,sub}:{label:string;value:string;sub?:string}) {
+  return (
+    <div className="p-4 rounded-xl bg-base-200">
+      <div className="text-xs opacity-60">{label}</div>
+      <div className="text-2xl font-bold">{value}</div>
+      {sub && <div className="text-xs opacity-60">{sub}</div>}
+    </div>
+  )
 }
