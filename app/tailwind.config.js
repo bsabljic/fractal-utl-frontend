@@ -3,5 +3,5 @@ export default {
   content: ["./index.html","./src/**/*.{ts,tsx}"],
   theme: { extend: {} },
   plugins: [require('daisyui')],
-  daisyui: { themes: ["pastel","business","light"] }
+  daisyui: { themes: ["business","pastel","light"] }
 }

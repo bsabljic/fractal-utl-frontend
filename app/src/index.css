@@ -1,5 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-:root{ color-scheme: dark light; }
-html,body,#root{ height:100%; }
+
+.container-xxl { @apply max-w-7xl mx-auto px-3 sm:px-6 lg:px-8; }
+.section-title { @apply text-xl sm:text-2xl font-semibold tracking-tight; }
+.subtle        { @apply text-slate-400; }
+
+.card {
+  @apply border border-white/10 shadow-xl rounded-xl;
+  /* DaisyUI varijable kad plugin radi */
+  background-color: hsl(var(--b1) / 0.6);
+}
